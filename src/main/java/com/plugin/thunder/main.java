@@ -72,7 +72,7 @@ public class main extends HabboPlugin implements EventListener {
         //Register configs
         Emulator.getConfig().register("commands.cmd_eha.timestamp", String.valueOf(7000));
         Emulator.getConfig().register("eha_command.discord", String.valueOf(1));
-        Emulator.getConfig().register("eha_command.discord-webhook-url", "https://discord.com/api/webhooks/916743155821465650/azMTYnVeCtzj6hE6RSONYz6cN_r6HZuxcArCVvb2V1yyD73ghze-OP_F8el-Wz-IVSzm");
+        Emulator.getConfig().register("eha_command.discord-webhook-url", "WebhookUrl");
         Emulator.getConfig().register("eha_command.webhook-thumbnail", "https://3.bp.blogspot.com/-Vh9RmdNqiBU/XK0oYm7tW9I/AAAAAAABOsg/il6h-uQVdzMOY255ktG9JCdh4cj0gyusgCKgBGAs/s1600/Image%2B363.png");
         Emulator.getConfig().register("eha_command.webhook-hotel-url", "https://habbo.com");
 
