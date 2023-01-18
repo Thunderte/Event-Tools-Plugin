@@ -62,13 +62,19 @@ public class main extends HabboPlugin implements EventListener {
         }
 
 
-        //Register sex command
+        //Register texts
         Emulator.getTexts().register("commands.keys.cmd_eha", "eha");
         Emulator.getTexts().register("commands.cmd_eha.open_room", "Room opened with successfully!");
         Emulator.getTexts().register("commands.cmd_eha.lock_room", "Room locked with successfully!");
-        Emulator.getTexts().register("commands.cmd_eha.timestamp", String.valueOf(7000));
-
-
+        Emulator.getTexts().register("eha_command.webhook-message", "A new event is happening in the %ROOM% room, enter the hotel to play!");
+        Emulator.getTexts().register("eha_command.webhook.title", "New Event!");
+        Emulator.getTexts().register("eha_command.webhook-footer","The event staff is %STAFF%");
+        //Register configs
+        Emulator.getConfig().register("commands.cmd_eha.timestamp", String.valueOf(7000));
+        Emulator.getConfig().register("eha_command.discord", String.valueOf(1));
+        Emulator.getConfig().register("eha_command.discord-webhook-url", "https://discord.com/api/webhooks/916743155821465650/azMTYnVeCtzj6hE6RSONYz6cN_r6HZuxcArCVvb2V1yyD73ghze-OP_F8el-Wz-IVSzm");
+        Emulator.getConfig().register("eha_command.webhook-thumbnail", "https://3.bp.blogspot.com/-Vh9RmdNqiBU/XK0oYm7tW9I/AAAAAAABOsg/il6h-uQVdzMOY255ktG9JCdh4cj0gyusgCKgBGAs/s1600/Image%2B363.png");
+        Emulator.getConfig().register("eha_command.webhook-hotel-url", "https://habbo.com");
 
         //Commands
         CommandHandler.addCommand(new EhaCommand("cmd_eha", Emulator.getTexts().getValue("commands.keys.cmd_eha").split(";")));

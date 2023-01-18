@@ -4,12 +4,12 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.rooms.Room;
-import com.eu.habbo.habbohotel.rooms.RoomChatMessageBubbles;
 import com.eu.habbo.habbohotel.rooms.RoomState;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.generic.alerts.BubbleAlertComposer;
 import gnu.trove.map.hash.THashMap;
+import com.plugin.thunder.util.Embed;
 
 import java.util.Map;
 
@@ -57,13 +57,15 @@ public class EhaCommand extends Command {
 
                     habbo.getClient().sendResponse(msg);
 
+                    Embed.DiscordEmbed(gameClient.getHabbo().getHabboInfo().getCurrentRoom(), gameClient.getHabbo());
+
                     Emulator.getThreading().run(new Runnable() {
                         @Override
                         public void run() {
                             room.setState(RoomState.LOCKED);
                             habbo2.whisper(Emulator.getTexts().getValue("commands.cmd_eha.lock_room"));
                         }
-                    }, Long.parseLong(Emulator.getTexts().getValue("commands.cmd_eha.timestamp")));
+                    }, Long.parseLong(Emulator.getConfig().getValue("commands.cmd_eha.timestamp")));
 
 
 
