@@ -6,7 +6,7 @@
  - :eha without typing the name of the event, the name of the room comes out. If you want a custom event name, just type :eha (event name).
 
 ## How to install 
-Download the compiled version [Compoled](https://github.com/Thunder/Event-Tools-Plugin/releases)
+Download the compiled version [Compiled](https://github.com/Thunder/Event-Tools-Plugin/releases)
 
 Paste the Event-Tools-1.0-jar-with-dependencies.jar file in your emulator's plugins folder!
 
