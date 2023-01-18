@@ -4,6 +4,7 @@
  ## How to use
  
  - :eha without typing the name of the event, the name of the room comes out. If you want a custom event name, just type :eha (event name).
+  
  Após você executar o comando :eha ele abre o quarto e após 7 segundos ele tranca. Você pode editar o tempo na tabela emulator_config e na tecla `commands.cmd_eha.timestamp`.
 
 ## How to install 
