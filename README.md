@@ -7,9 +7,13 @@
 
 ## How to install 
 Download the compiled version [Compoled](https://github.com/Thunder/Event-Tools-Plugin/releases)
+
 Paste the Event-Tools-1.0-jar-with-dependencies.jar file in your emulator's plugins folder!
+
 Go to your database and in permissions give the permission in cmd_eha for each rank: 0 - deny, 1 - allow!
+
 Restart your hotel emulator or type :update_permissions.
+
 
 ## Configuration
 
