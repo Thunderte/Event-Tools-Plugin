@@ -5,7 +5,7 @@
  
  - :eha without typing the name of the event, the name of the room comes out. If you want a custom event name, just type :eha (event name).
   
- Após você executar o comando :eha ele abre o quarto e após 7 segundos ele tranca. Você pode editar o tempo na tabela emulator_config e na tecla `commands.cmd_eha.timestamp`.
+After you run the :eha command it opens the room and after 7 seconds it locks. You can edit the time in the emulator_config table and in the `commands.cmd_eha.timestamp` key.
 
 ## How to install 
 Download the compiled version [Compiled](https://github.com/Thunderte/Event-Tools-Plugin/releases/tag/1.0)
