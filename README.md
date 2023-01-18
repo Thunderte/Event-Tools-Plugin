@@ -26,12 +26,19 @@ Restart your hotel emulator or type :update_permissions.
 
 
 Open the emulator_settings table in your database and edit the `eha_command.discord` key to 1
+
 Go to the discord channel, Click the gear icon (Edit Channel) of the channel you want to post to. 
+
 Click Webhooks in the left menu. 
+
 Click the Create Webhook button. 
+
 Enter a Name of your choice. 
+
 Click the Copy button of the Webhook URL. 
+
 Click the Save button. 
+
 Paste the Webhook URL into emulator_settings, key `eha_command.discord-webhook-url`
 
 To contact me use discord: Thunderte#1527
