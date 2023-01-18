@@ -41,5 +41,7 @@ Click the Save button.
 
 Paste the Webhook URL into emulator_settings, key `eha_command.discord-webhook-url`
 
+
+
 To contact me use discord: Thunderte#1527
 
