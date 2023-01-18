@@ -1,7 +1,7 @@
 # Event-Tools-Plugin
  Event Tools is a plugin, developed for the community!
  
- ##How to use
+ ## How to use
  
  - :eha without typing the name of the event, the name of the room comes out. If you want a custom event name, just type :eha (event name).
 
