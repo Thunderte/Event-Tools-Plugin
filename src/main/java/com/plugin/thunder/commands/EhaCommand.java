@@ -5,13 +5,13 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.RoomState;
-import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.generic.alerts.BubbleAlertComposer;
 import gnu.trove.map.hash.THashMap;
 import com.plugin.thunder.util.Embed;
 
-import java.util.Map;
+import java.util.Arrays;
 
 public class EhaCommand extends Command {
 
@@ -21,58 +21,32 @@ public class EhaCommand extends Command {
 
     @Override
     public boolean handle(GameClient gameClient, String[] strings) throws Exception {
-        if (gameClient.getHabbo().getHabboInfo().getCurrentRoom() != null) {
-                StringBuilder message = new StringBuilder();
+        if (gameClient.getHabbo().getHabboInfo().getCurrentRoom() == null)
+            return false;
 
-                for (int i = 1; i < strings.length; i++) {
-                    message.append(strings[i]);
-                    message.append(" ");
-                }
-                THashMap<String, String> codes = new THashMap<>();
-                codes.put("ROOMNAME", gameClient.getHabbo().getHabboInfo().getCurrentRoom().getName());
-                codes.put("ROOMID", gameClient.getHabbo().getHabboInfo().getCurrentRoom().getId() + "");
-                codes.put("USERNAME", gameClient.getHabbo().getHabboInfo().getUsername());
-                codes.put("LOOK", gameClient.getHabbo().getHabboInfo().getLook());
-                codes.put("TIME", Emulator.getDate().toString());
-                if(strings.length >= 2) {
-                    codes.put("MESSAGE", message.toString());
-                } else {
-                    codes.put("MESSAGE", gameClient.getHabbo().getHabboInfo().getCurrentRoom().getName());
-                }
+        HabboInfo habboInfo = gameClient.getHabbo().getHabboInfo();
+        String message = String.join(" ", Arrays.copyOfRange(strings, 1, strings.length));
+        THashMap<String, String> codes = new THashMap<>();
+        codes.put("ROOMNAME", habboInfo.getCurrentRoom().getName());
+        codes.put("ROOMID", habboInfo.getCurrentRoom().getId() + "");
+        codes.put("USERNAME", habboInfo.getUsername());
+        codes.put("LOOK", habboInfo.getLook());
+        codes.put("TIME", Emulator.getDate().toString());
+        codes.put("MESSAGE", strings.length >= 2 ? message.toString() : habboInfo.getCurrentRoom().getName());
 
-                ServerMessage msg = new BubbleAlertComposer("hotel.event", codes).compose();
+        ServerMessage msg = new BubbleAlertComposer("hotel.event", codes).compose();
+        Room room = habboInfo.getCurrentRoom();
+        Embed.DiscordEmbed(habboInfo.getCurrentRoom(), gameClient.getHabbo());
+        gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.open_room"));
+        room.setState(RoomState.OPEN);
+        Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().values().stream().filter(
+                habbo -> habbo != null && !habbo.getHabboStats().blockStaffAlerts)
+                .forEach(habbo -> habbo.getClient().sendResponse(msg));
 
-                for (Map.Entry<Integer, Habbo> set : Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().entrySet()) {
-                    Habbo habbo = set.getValue();
-
-                    Habbo habbo2 = gameClient.getHabbo();
-                    if (habbo.getHabboStats().blockStaffAlerts)
-                        continue;
-
-                    Room room = gameClient.getHabbo().getHabboInfo().getCurrentRoom();
-
-                    room.setState(RoomState.OPEN);
-
-                    habbo2.whisper(Emulator.getTexts().getValue("commands.cmd_eha.open_room"));
-
-                    habbo.getClient().sendResponse(msg);
-
-                    Embed.DiscordEmbed(gameClient.getHabbo().getHabboInfo().getCurrentRoom(), gameClient.getHabbo());
-
-                    Emulator.getThreading().run(new Runnable() {
-                        @Override
-                        public void run() {
-                            room.setState(RoomState.LOCKED);
-                            habbo2.whisper(Emulator.getTexts().getValue("commands.cmd_eha.lock_room"));
-                        }
-                    }, Long.parseLong(Emulator.getConfig().getValue("commands.cmd_eha.timestamp")));
-
-
-
-                }
-
-                return true;
-            }
+        Emulator.getThreading().run(() -> {
+            room.setState(RoomState.LOCKED);
+            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.lock_room"));
+        }, Long.parseLong(Emulator.getConfig().getValue("commands.cmd_eha.timestamp")));
 
         return true;
     }
