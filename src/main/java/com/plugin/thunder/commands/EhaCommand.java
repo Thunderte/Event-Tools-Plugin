@@ -37,15 +37,19 @@ public class EhaCommand extends Command {
         ServerMessage msg = new BubbleAlertComposer("hotel.event", codes).compose();
         Room room = habboInfo.getCurrentRoom();
         Embed.DiscordEmbed(habboInfo.getCurrentRoom(), gameClient.getHabbo());
-        gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.open_room"));
-        room.setState(RoomState.OPEN);
+        if(Emulator.getConfig().getBoolean("eha_command.automatic_close_room", true)) {
+            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.open_room"));
+            room.setState(RoomState.OPEN);
+        }
         Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().values().stream().filter(
                 habbo -> habbo != null && !habbo.getHabboStats().blockStaffAlerts)
                 .forEach(habbo -> habbo.getClient().sendResponse(msg));
 
         Emulator.getThreading().run(() -> {
-            room.setState(RoomState.LOCKED);
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.lock_room"));
+            if(Emulator.getConfig().getBoolean("eha_command.automatic_close_room", true)) {
+                room.setState(RoomState.LOCKED);
+                gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.lock_room"));
+            }
         }, Long.parseLong(Emulator.getConfig().getValue("commands.cmd_eha.timestamp")));
 
         return true;

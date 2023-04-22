@@ -8,8 +8,11 @@ import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.HabboPlugin;
 import com.eu.habbo.plugin.events.emulator.EmulatorLoadedEvent;
 import com.plugin.thunder.commands.EhaCommand;
+import com.plugin.thunder.commands.OpenRoomCommand;
+import com.plugin.thunder.commands.CloseRoomCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -49,12 +52,21 @@ public class main extends HabboPlugin implements EventListener {
     @EventHandler
     public void onEmulatorLoaded(EmulatorLoadedEvent event) throws Exception {
 
-        if (this.registerPermission("cmd_eha", "'0', '1'", "1", false)) {
+        if (this.registerPermission("cmd_eha", "'0', '1'", "0", false)) {
+            Emulator.getGameEnvironment().getPermissionsManager().reload();
+        }
+        if (this.registerPermission("cmd_open_room", "'0', '1'", "0", false)) {
+            Emulator.getGameEnvironment().getPermissionsManager().reload();
+        }
+
+        if (this.registerPermission("cmd_close_room", "'0', '1'", "0", false)) {
             Emulator.getGameEnvironment().getPermissionsManager().reload();
         }
 
         // Register texts
         Emulator.getTexts().register("commands.keys.cmd_eha", "eha");
+        Emulator.getTexts().register("commands.keys.cmd_open_room", "openroom");
+        Emulator.getTexts().register("commands.keys.cmd_close_room", "closeroom");
         Emulator.getTexts().register("commands.cmd_eha.open_room", "Room opened with successfully!");
         Emulator.getTexts().register("commands.cmd_eha.lock_room", "Room locked with successfully!");
         Emulator.getTexts().register("eha_command.webhook-message",
@@ -64,13 +76,15 @@ public class main extends HabboPlugin implements EventListener {
         // Register configs
         Emulator.getConfig().register("commands.cmd_eha.timestamp", "7000");
         Emulator.getConfig().register("eha_command.discord", "1");
+        Emulator.getConfig().register("eha_command.automatic_close_room", "0");
         Emulator.getConfig().register("eha_command.discord-webhook-url", "WebhookUrl");
         Emulator.getConfig().register("eha_command.webhook-thumbnail",
                 "https://3.bp.blogspot.com/-Vh9RmdNqiBU/XK0oYm7tW9I/AAAAAAABOsg/il6h-uQVdzMOY255ktG9JCdh4cj0gyusgCKgBGAs/s1600/Image%2B363.png");
         Emulator.getConfig().register("eha_command.webhook-hotel-url", "https://habbo.com");
 
         // Commands
-        CommandHandler.addCommand(
-                new EhaCommand("cmd_eha", Emulator.getTexts().getValue("commands.keys.cmd_eha").split(";")));
+        CommandHandler.addCommand(new EhaCommand("cmd_eha", Emulator.getTexts().getValue("commands.keys.cmd_eha").split(";")));
+        CommandHandler.addCommand(new OpenRoomCommand("cmd_open_room", Emulator.getTexts().getValue("commands.keys.cmd_open_room").split(";")));
+        CommandHandler.addCommand(new CloseRoomCommand("cmd_close_room", Emulator.getTexts().getValue("commands.keys.cmd_close_room").split(";")));
     }
 }
