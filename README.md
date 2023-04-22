@@ -24,6 +24,8 @@ Restart your hotel emulator or type :update_permissions.
 | Key                  | Default Value |
 |----------------------|---------------|
 | cmd_eha              | 0             |
+| cmd_open_room              | 0             |
+| cmd_close_room              | 0             |
 
 
 ## Configuration Discord Webhook
