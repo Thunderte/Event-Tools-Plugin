@@ -10,6 +10,7 @@ import com.eu.habbo.plugin.events.emulator.EmulatorLoadedEvent;
 import com.plugin.thunder.commands.EhaCommand;
 import com.plugin.thunder.commands.OpenRoomCommand;
 import com.plugin.thunder.commands.CloseRoomCommand;
+import com.plugin.thunder.commands.SetPublicCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,12 +64,21 @@ public class main extends HabboPlugin implements EventListener {
             Emulator.getGameEnvironment().getPermissionsManager().reload();
         }
 
+        if (this.registerPermission("cmd_set_public", "'0', '1'", "0", false)) {
+            Emulator.getGameEnvironment().getPermissionsManager().reload();
+        }
+
         // Register texts
         Emulator.getTexts().register("commands.keys.cmd_eha", "eha");
         Emulator.getTexts().register("commands.keys.cmd_open_room", "openroom");
         Emulator.getTexts().register("commands.keys.cmd_close_room", "closeroom");
         Emulator.getTexts().register("commands.cmd_eha.open_room", "Room opened with successfully!");
         Emulator.getTexts().register("commands.cmd_eha.lock_room", "Room locked with successfully!");
+
+        Emulator.getTexts().register("commands.keys.cmd_set_public", "setpublic");
+        Emulator.getTexts().register("commands.keys.cmd_set_public.success", "This room has been added to public!");
+        Emulator.getTexts().register("commands.keys.cmd_set_public.success2", "This room has been removed from the public!");
+
         Emulator.getTexts().register("eha_command.webhook-message",
                 "A new event is happening in the %ROOM% room, enter the hotel to play!");
         Emulator.getTexts().register("eha_command.webhook.title", "New Event!");
@@ -86,5 +96,6 @@ public class main extends HabboPlugin implements EventListener {
         CommandHandler.addCommand(new EhaCommand("cmd_eha", Emulator.getTexts().getValue("commands.keys.cmd_eha").split(";")));
         CommandHandler.addCommand(new OpenRoomCommand("cmd_open_room", Emulator.getTexts().getValue("commands.keys.cmd_open_room").split(";")));
         CommandHandler.addCommand(new CloseRoomCommand("cmd_close_room", Emulator.getTexts().getValue("commands.keys.cmd_close_room").split(";")));
+        CommandHandler.addCommand(new SetPublicCommand("cmd_set_public", Emulator.getTexts().getValue("commands.keys.cmd_set_public").split(";")));
     }
 }
