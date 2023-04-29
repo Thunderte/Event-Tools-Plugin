@@ -5,7 +5,12 @@
  
  - :eha without typing the name of the event, the name of the room comes out. If you want a custom event name, just type :eha (event name).
   
+  
+In case you want the room to open and close automatically when you start an event. Edit in emulator_settings `eha_command.automatic_close_room` to 1.
+
 After you run the :eha command it opens the room and after 7 seconds it locks. You can edit the time in the emulator_config table and in the `commands.cmd_eha.timestamp` key.
+
+
 
 ## How to install 
 Download the compiled version [Compiled](https://github.com/Thunderte/Event-Tools-Plugin/releases/tag/1.0)
@@ -24,6 +29,8 @@ Restart your hotel emulator or type :update_permissions.
 | Key                  | Default Value |
 |----------------------|---------------|
 | cmd_eha              | 0             |
+| cmd_open_room              | 0             |
+| cmd_close_room              | 0             |
 
 
 ## Configuration Discord Webhook
