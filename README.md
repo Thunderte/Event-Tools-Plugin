@@ -4,8 +4,12 @@
  ## How to use
  
  - :eha without typing the name of the event, the name of the room comes out. If you want a custom event name, just type :eha (event name).
+
+- :openroom open the room you are.
+
+- :closeroom lock the room you are.
  
- - :setpublic add the room you are in the public rooms category!
+ - :setpublic add the room you are in the public rooms category.
   
   
 In case you want the room to open and close automatically when you start an event. Edit in emulator_settings `eha_command.automatic_close_room` to 1.
