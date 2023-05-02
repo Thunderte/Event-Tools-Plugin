@@ -8,12 +8,23 @@ import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.habbohotel.users.HabboInfo;
+import gnu.trove.map.hash.THashMap;
 
 import static com.eu.habbo.Emulator.getConfig;
 import static com.eu.habbo.Emulator.getTexts;
 
 
-public class Embed {
+public class Functions {
+
+    public static THashMap<String, String> BubbleAlertEvent(HabboInfo staff, Room room) {
+
+        THashMap<String, String> notification = new THashMap<>();
+        notification.put("display", "BUBBLE");
+        notification.put("image", getTexts().getValue("eha_command.bubblealert_staff").replace("%LOOK%", staff.getLook()));
+        notification.put("message", getTexts().getValue("eha_command.bubblealert").replace("%EVENT%", room.getName()));
+        return notification;
+    }
 
     public static void DiscordEmbed(Room room, Habbo staff) {
         if (getConfig().getBoolean("eha_command.discord", true)) {

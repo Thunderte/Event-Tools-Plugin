@@ -70,6 +70,8 @@ public class main extends HabboPlugin implements EventListener {
 
         // Register texts
         Emulator.getTexts().register("commands.keys.cmd_eha", "eha");
+        Emulator.getTexts().register("eha_command.bubblealert", "An event is running now em: %EVENT%");
+        Emulator.getTexts().register("eha_command.bubblealert_staff", "https://habbo.com/habbo-imaging/avatarimage?figure=%LOOK%&action=std&direction=1&head_direction=3&img_format=png&gesture=std&frame=1&headonly=1&size=m");
         Emulator.getTexts().register("commands.keys.cmd_open_room", "openroom");
         Emulator.getTexts().register("commands.keys.cmd_close_room", "closeroom");
         Emulator.getTexts().register("commands.cmd_eha.open_room", "Room opened with successfully!");

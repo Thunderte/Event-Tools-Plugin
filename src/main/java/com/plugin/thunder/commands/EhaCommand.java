@@ -9,9 +9,11 @@ import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.generic.alerts.BubbleAlertComposer;
 import gnu.trove.map.hash.THashMap;
-import com.plugin.thunder.util.Embed;
+import com.plugin.thunder.util.Functions;
 
 import java.util.Arrays;
+
+import static com.eu.habbo.Emulator.getGameServer;
 
 public class EhaCommand extends Command {
 
@@ -36,7 +38,8 @@ public class EhaCommand extends Command {
 
         ServerMessage msg = new BubbleAlertComposer("hotel.event", codes).compose();
         Room room = habboInfo.getCurrentRoom();
-        Embed.DiscordEmbed(habboInfo.getCurrentRoom(), gameClient.getHabbo());
+        Functions.DiscordEmbed(habboInfo.getCurrentRoom(), gameClient.getHabbo());
+        getGameServer().getGameClientManager().sendBroadcastResponse(new BubbleAlertComposer("prizeplugin", Functions.BubbleAlertEvent(habboInfo, room)));
         if(Emulator.getConfig().getBoolean("eha_command.automatic_close_room", true)) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.cmd_eha.open_room"));
             room.setState(RoomState.OPEN);
